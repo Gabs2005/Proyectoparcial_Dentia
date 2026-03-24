@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Citas</title>
+
+    <style>
+        h1{
+            text-align: center;
+            color:#486b85;
+        }
+
+        form{
+            border: 1px;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px auto;
+            width: 300px;
+            background-color: #ebeff0;
+        }
+
+        label {
+            font-weight: bold;
+            color: #486b85;
+        }
+
+        input {
+            border-radius: 15px;
+        }
+
+        button {
+            background-color: #486b85;
+            color: white;
+        }
+
+        .mensaje{
+            text-align: center;
+            color: #486b85;
+        }
+
+        body {
+            background-color: #fdfaf5;
+        }
+
+        .TENIS {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .TENI {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .TENI img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid transparent;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .TENI img:hover {
+            border-color: #ff9966;
+            transform: scale(1.05);
+        }
+
+        .TENI p {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .inicio {
+    width: 50px;
+    height: 50px;
+    list-style: none;
+    padding: 10px;
+}
+
+        .main-wrapper {
+    display: flex;
+    align-items: center; /* centra vertical */
+    justify-content: center;
+    gap: 50px;
+    padding: 40px;
+    flex-wrap: wrap; /* para responsive */
+}
+
+/* IZQUIERDA (imagen) */
+.izquierda img {
+    width: 500px;
+    max-width: 100%;
+    border-radius: 15px;
+    border: 4px solid #486b85;
+}
+
+/* DERECHA (formulario + contenido) */
+.derecha {
+    max-width: 400px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="main-wrapper">
+
+        <div class="izquierda">
+            <img src="img/iamgen de direccion 2.png" alt=Plato principal">
+        </div>
+
+
+        <div class="derecha">
+            <h1>Agenda tu cita</h1>
+            <h2>Te ayudamos a sonreir con confianza</h2>
+
+            <div class="TENIS">
+                <div class="TENI">
+                    <img src="img/endodoncia.jpg" alt="Potaje de lentejas" onclick="cambiarProducto('Potaje de lentejas')">
+                    <p>Endodoncia</p>
+                </div>
+                <div class="TENI">
+                    <img src="img/limpieza profesional.jpg" alt="Pozole" onclick="cambiarProducto('Pozole')">
+                    <p>Limpieza</p>
+                </div>
+                <div class="TENI">
+                    <img src="img/extraccion-dental.jpg" alt="Frijol con puerco" onclick="cambiarProducto('Frijol con puerco')">
+                    <p>Extracción dental</p>
+                </div>
+            </div>
+
+    <form id="Formulario">
+        <label>Apellidos</label>
+        <input type="text" id="apellidos" required><br><br>
+
+        <label>Nombre</label>
+        <input type="text" id="nombre" required><br><br>
+
+        <label>Edad</label>
+        <input type="text" id="edad" required><br><br>
+
+        <label>Tipo de consulta</label>
+        <input type="text" id="problema" required><br><br>
+
+        <label for="alergias">Alergias</label>
+        <select id="alergias" name="alergias" required>
+            <option value="">-- Selecciona una opción --</option>
+            <option value="ibuprofeno">Ibuprofeno</option>
+            <option value="aspirina">Aspirina</option>
+            <option value="penicilina">Penicilina</option>
+            <option value="amoxicilina">Amoxicilina</option>
+            <option value="ninguna">Ninguna</option>
+        </select>
+
+        <br><br>
+        <button type="submit">Enviar</button>
+    </form>
+<p class="mensaje" id="mensaje"></p>
+
+<script>
+    const url = "https://script.google.com/macros/s/AKfycbxFDZp5Mno4rv70UQGEz8X5IH-YwYdARthsivIyZuw7ESbeso3bZg7BsUBhIF197cDn/exec"
+    document.getElementById("Formulario")
+    .addEventListener("submit", function(e){
+
+        e.preventDefault();
+
+        const datos = {
+            apellidos:document.getElementById("apellidos").value,
+            nombre:document.getElementById("nombre").value,
+            edad:document.getElementById("edad").value,
+            problema:document.getElementById("problema").value,
+            alergias:document.getElementById("alergias").value,
+        };
+        
+        fetch(url, {
+            method: "POST",
+            body: JSON.stringify(datos)
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("mensaje").innerHTML =
+            "Datos guardados correctamente";
+            document.getElementById("Formulario").reset();
+        })
+        .catch(error => {
+            document.getElementById("mensaje").innerHTML =
+            "Error al guardar";
+        });
+    });
+
+</script>
+ <li><a href="index.html"><img src="img/casa.png" class="inicio" alt="casa"></a></li>
+</body>
+</html>
